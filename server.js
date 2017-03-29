@@ -1,11 +1,34 @@
 const express = require('express');
 const app = express();
+const passport = require('passport');
+const session = require('express-session');
 const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo')(session);
+mongoose.Promise = global.Promise;
+
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 const {PORT, DATABASE_URL} = require('./config/database.js');
 
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(session({
+    name: 'Session',
+    resave: true,
+    saveUninitialized: true,
+    secret: 'forty-two',
+    store: new MongoStore({
+      url: DATABASE_URL,
+      autoReconnect: true
+    })
+}))
+app.use(passport.initialize());
+app.use(passport.session());
 
 let server;
 
