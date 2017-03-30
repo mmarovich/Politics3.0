@@ -5,14 +5,14 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 mongoose.Promise = global.Promise;
-
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
+const path = require('path');
 const {PORT, DATABASE_URL} = require('./config/database.js');
 
-const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
+
+require('./config/passport')(passport)
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,6 +29,8 @@ app.use(session({
 }))
 app.use(passport.initialize());
 app.use(passport.session());
+
+require('./routes/router.js')(app, passport);
 
 let server;
 
