@@ -1,5 +1,5 @@
 
-module.exports = function(app, passport) {
+module.exports = function(app, passport, path) {
 
 	app.get('/', (req, res) => {
 		if (req.isAuthenticated()) {
@@ -66,7 +66,6 @@ module.exports = function(app, passport) {
 					})
 			})
 			.then(user => {
-				console.log(user);
 				req.logIn(user, function (error) {
 		          if (error) {
 		            return next(error)

@@ -20,14 +20,12 @@ module.exports = function(passport) {
 		.exec()
 		.then(_user => {
 			user = _user;
-			console.log('user variable:', user);
 			if (!user) {
 				return callback(null, false, {message: 'Incorrect username'});
 			}
 			return user.validatePassword(password);
 		})
 		.then(isValid => {
-			console.log('isValid: ' + isValid);
 			if (!isValid) {
 				return callback(null, false, {message: "Incorrect password"});
 			}

@@ -30,7 +30,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./routes/router.js')(app, passport);
+require('./routes/router.js')(app, passport, path);
 
 let server;
 
