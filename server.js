@@ -7,6 +7,7 @@ const MongoStore = require('connect-mongo')(session);
 mongoose.Promise = global.Promise;
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const jsonParser = require('body-parser').json();
 const path = require('path');
 const {PORT, DATABASE_URL} = require('./config/database.js');
 
@@ -16,6 +17,7 @@ require('./config/passport')(passport)
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(jsonParser);
 
 app.use(session({
     name: 'Session',

@@ -1,3 +1,4 @@
+const { User } = require('./models');
 
 module.exports = function(app, passport, path) {
 
@@ -78,7 +79,49 @@ module.exports = function(app, passport, path) {
 			.catch(err => {
 				res.status(500).json({message: 'Internal server error'});
 			});
-});
+	});
 
+	app.post('/login',
+		passport.authenticate('basic', {session: true}),
+	  	function(req, res) {
+	  		console.log(JSON.stringify(req.user));
+	  		if (!req.user) {
+	  			res.redirect('/login');
+	  		} else {
+	  			console.log(req.session);
+	    		res.json(req.user);
+	    		res.sendFile(path.resolve(__dirname + '/../public/views/app.html'));
+	  		}
+		});
 
+	app.get('/logout', (req, res) => {
+		console.log('IN LOGOUT');
+		req.logout();
+		console.log('before:' + req.session);
+		req.session.destroy(function (err) {
+			console.log('after:' + req.session);
+			console.log('LOGOUT ERROR:' + err);
+			res.status(302).redirect('/');
+		});
+		// res.sendFile(path.resolve(__dirname + '/../public/views/login.html'));
+	})
+
+	app.put('/location', (req, res) => {
+		User
+		.findOneAndUpdate(
+			{id: req.params._id}, 
+			{$set:{location: req.body.location}}, 
+			{new: true}, 
+			function(err, newLocation){
+	    		if(err){
+	    			res.status(500);
+	        		console.log("Something wrong when updating data!");
+	    		} else {
+	    			console.log("Location updated to " + newLocation);
+	    			res.status(204).json('Heyo');
+	    		}
+	    	});
+	})
+
+	
 }
