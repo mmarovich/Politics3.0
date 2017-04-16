@@ -197,6 +197,11 @@ function cityClerkData(data, i) {
 		data.officials[data.offices[i].officialIndices[0]].urls[0] : '')
 }
 
+function locationData(data) {
+	$('.results-for > p > span').html(data.normalizedInput.line1 + '<br>' + data.normalizedInput.city +
+		', ' + data.normalizedInput.state + ' ' + data.normalizedInput.zip)
+}
+
 function displayData(data) {
 	console.log(data);
 
@@ -215,6 +220,8 @@ function displayData(data) {
 				console.log('get error');
 			}
 		});
+
+		locationData(data);
 
 	for (i=0;i< data.offices.length;i++) {
 		if (data.offices[i].name === "President of the United States") {
@@ -242,7 +249,7 @@ function displayData(data) {
 
 function inputLocation(location) {
 	console.log('location is ', location)
-	$('.info > span').html('');
+	$('.info > span').html('information not available');
 	var address = location.city + " " + location.line1 + " " + location.state + " " + location.zip;
 
 	getDataFromApi(address, displayData);
@@ -251,7 +258,7 @@ function inputLocation(location) {
 function setLocation() {
 	$('.location').submit(function(e) {
 		e.preventDefault();
-		$('.info > span').html('');
+		$('.info > span').html('information not available');
 		var address = $(this).find('.address').val();
 		$('#location')[0].reset();
 		

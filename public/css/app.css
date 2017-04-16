@@ -3,6 +3,7 @@
 }
 
 header {
+  display: block;
   text-align: center;
 }
 
@@ -12,9 +13,13 @@ h1 {
   display: inline-block;
 }
 
-header > button {
+header > form {
   display: inline-block;
   vertical-align: top;
+}
+
+form > button {
+  font-size: 14px;
 }
 
 .signUp {
@@ -54,8 +59,24 @@ h3 {
   font-weight: bold;
 }
 
-.navSettings > p {
+.dashNav {
+  display:block;
+}
+
+.results-for {
+  text-align: left;
+  display: inline-block;
+  width: 49%;
+}
+
+.navSettings {
+  width: 49%;
+  display: inline-block;
   text-align: right;
+}
+
+.navSettings > a {
+  margin-right: 10px;
 }
 
 input {
