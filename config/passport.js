@@ -1,5 +1,6 @@
 const {BasicStrategy} = require('passport-http');
 const {User} = require('../routes/models');
+const LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(passport) {
 
@@ -12,6 +13,21 @@ module.exports = function(passport) {
 		console.log(obj, "deserialize")
   		cb(null, obj)
 	});
+
+	const localStrategy = new LocalStrategy(
+		function(username, password, done) {
+			User.findOne({ username: username }, function (err, user) {
+			if (err) { return done(err); }
+			if (!user) {
+				return done(null, false, { message: 'Incorrect username.' });
+			}
+			if (!user.validatePassword(password)) {
+				return done(null, false, { message: 'Incorrect password.' });
+			}
+			return done(null, user);
+			});
+		}
+	);
 
 	const basicStrategy = new BasicStrategy({usernameField: "username"}, function(username, password, callback) {
 	let user;
@@ -34,4 +50,7 @@ module.exports = function(passport) {
 			}
 		});
 	});
+
+	// passport.use(basicStrategy);
+	passport.use(localStrategy);
 }

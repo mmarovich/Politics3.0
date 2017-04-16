@@ -6,7 +6,7 @@ module.exports = function(app, passport, path) {
 		if (req.isAuthenticated()) {
 			res.sendFile(path.resolve(__dirname + '/../public/views/app.html'));
 		} else {
-			res.sendFile(path.resolve(__dirname + '/../public/views/login.html'));
+			res.sendFile(path.resolve(__dirname + '/../public/views/app.html'));
 		}
 	});
 
@@ -63,7 +63,8 @@ module.exports = function(app, passport, path) {
 						username: username,
 						password: hash,
 						firstName: firstName,
-						lastName: lastName
+						lastName: lastName,
+						location: ''
 					})
 			})
 			.then(user => {
@@ -71,7 +72,7 @@ module.exports = function(app, passport, path) {
 		          if (error) {
 		            return next(error)
 		          } else {
-		           	res.sendFile(path.resolve(__dirname + '/../public/views/app.html'));
+		           	res.status(201).json(user.apiRepr());
 		          }
 		        })
 				// return res.status(201).json(user.apiRepr());
@@ -82,45 +83,54 @@ module.exports = function(app, passport, path) {
 	});
 
 	app.post('/login',
-		passport.authenticate('basic', {session: true}),
+		passport.authenticate('local', {session: true}),
 	  	function(req, res) {
 	  		console.log(JSON.stringify(req.user));
 	  		if (!req.user) {
-	  			res.redirect('/login');
+	  			// res.redirect('/login');
+				console.log('User not found!');
 	  		} else {
 	  			console.log(req.session);
 	    		res.json(req.user);
-	    		res.sendFile(path.resolve(__dirname + '/../public/views/app.html'));
+	    		// res.sendFile(path.resolve(__dirname + '/../public/views/app.html'));
+				console.log('Valid username: ' + req.user);
 	  		}
 		});
 
 	app.get('/logout', (req, res) => {
 		console.log('IN LOGOUT');
 		req.logout();
-		console.log('before:' + req.session);
 		req.session.destroy(function (err) {
-			console.log('after:' + req.session);
-			console.log('LOGOUT ERROR:' + err);
 			res.status(302).redirect('/');
 		});
 		// res.sendFile(path.resolve(__dirname + '/../public/views/login.html'));
 	})
 
 	app.put('/location', (req, res) => {
+		console.log(req.body, 'body here');
 		User
-		.findOneAndUpdate(
-			{id: req.params._id}, 
-			{$set:{location: req.body.location}}, 
-			{new: true}, 
-			function(err, newLocation){
-	    		if(err){
-	    			res.status(500);
-	        		console.log("Something wrong when updating data!");
-	    		} else {
-	    			console.log("Location updated to " + newLocation);
-	    			res.status(204).json('Heyo');
-	    		}
-	    	});
+		.findOne(
+			{_id: req.body.user._id}
+		).exec(function (err, data) {
+			console.log(data, 'data here')
+			data.location = req.body.location;
+			data.save();
+			res.status(204).send();
+		})
+		// User
+		// .findOneAndUpdate(
+		// 	{id: req.body.user._id}, 
+		// 	{$set:{location: req.body.location}}, 
+		// 	{new: true}, 
+		// 	function(err, newLocation){
+	    // 		if(err){
+	    // 			res.status(500);
+	    //     		console.log("Something wrong when updating data!");
+	    // 		} else {
+	    // 			console.log("Location updated to " + newLocation);
+	    // 			res.status(204).json('Heyo');
+	    // 		}
+	    // 	});
 	})
 
 	

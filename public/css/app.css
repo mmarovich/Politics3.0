@@ -17,6 +17,31 @@ header > button {
   vertical-align: top;
 }
 
+.signUp {
+	border: 5px solid black;
+	text-align: center;
+}
+
+.logIn {
+	border: 5px solid black;
+	text-align: center;
+}
+
+.createAccount > p {
+	font-size: 20px;
+	margin: 5px;
+}
+
+.logIn > p {
+  	font-size: 20px;
+  	margin: 5px;
+}
+
+h3 {
+  	text-align: left;
+  	margin: 2px;
+}
+
 .level {
   text-align: center;
   font-size: 25px;
@@ -43,14 +68,38 @@ button {
 	margin: 5px;
 }
 
+.hidden {
+  display: none;
+}
+
 
 
 @media only screen and (min-width: 420px) {
 
+  header {
+		text-align: center;
+	}
+
+	.userAccounts {
+	  	display: block;
+	  	text-align: center;
+	}
+
+	.signUp {
+	  	display: inline-block;
+	  	width: 25%;
+	}
+
+	.logInBox {
+	  	display: inline-block;
+	  	vertical-align: top;
+	  	width: 25%;
+	}
+
 	input {
   		width: 75%;
   		height: 30px;
-  	}
+  }
 
   p {
   	font-size: 20px;
@@ -86,5 +135,9 @@ button {
     display: inline-block;
     padding: 20px 100px;
     width: 48%;
+  }
+
+  .hidden {
+    display: none;
   }
 }

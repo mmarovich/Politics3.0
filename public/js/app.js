@@ -1,6 +1,79 @@
 var USERS_URL = 'mongodb://localhost/politics';
 var CIVIC_CURL = 'https://www.googleapis.com/civicinfo/v2/representatives';
 
+state = {
+	loggedIn: false,
+	user: null
+}
+
+function createAccount() {
+	$('.createAccount').submit(function(e) {
+		e.preventDefault();
+		var username = $(this).find('.usernameCreate').val();
+		var firstName = $(this).find('.firstName').val();
+		var lastName = $(this).find('.lastName').val();
+		var password = $(this).find('.passwordCreate').val();
+		$.ajax({
+			url: "/signup",
+			method: "post",
+			contentType: "application/json",
+			data: JSON.stringify({
+				username: username,
+				firstName: firstName,
+				lastName: lastName,
+				password: password
+			}),
+			success: function(data) {
+				state.user = data;
+				$('.createAccount').children('input').val('');
+				console.log(data);
+				$('.unBio > span').html(data.username);
+				$('.fullNameBio > span').html(data.firstName + ' ' + data.lastName);
+				$('logOut').removeClass('hidden');
+				state.loggedIn = true;
+				createQueryHash('settings');
+				$(window).trigger('hashchange');
+				console.log('signup successful');
+			},
+			error: function() {
+				console.log('post error');
+			}
+		})
+	})
+}
+
+function logIn() {
+	$('.logIn').submit(function(e) {
+		e.preventDefault();
+		var username = $(this).find('.username').val();
+		var password = $(this).find('.password').val();
+		$.ajax({
+			url: "/login",
+			method: "post",
+			contentType: "application/json",
+			data: JSON.stringify({
+				username: username,
+				password: password
+			}),
+			success: function(data) {
+				state.user = data;
+				$('.login').children('input').val('');
+				$('.unBio > span').html(data.username);
+				$('.fullNameBio > span').html(data.firstName + ' ' + data.lastName);
+				$('logOut').removeClass('hidden');
+				state.loggedIn = true;
+				createQueryHash('dash');
+				$(window).trigger('hashchange');
+				inputLocation(data.location);
+				console.log('Login Successful')
+			},
+			error: function() {
+				console.log('get error');
+			}
+		});
+	});
+};
+
 function logOut() {
 	$('.logOut').click(function(e) {
 		e.preventDefault();
@@ -9,10 +82,14 @@ function logOut() {
 			url: "/logout",
 			method: "get",
 			success: function() {
+				$('.logOut').addClass('hidden');
+				createQueryHash('');
+				state.loggedIn = false;
+				$(window).trigger('hashchange');
 				console.log('Have a nice day!');
 			},
 			error: function() {
-
+				console.log('Logout error');
 			}
 		});
 	})
@@ -36,7 +113,8 @@ function presidentData(data, i) {
 		data.officials[data.offices[i].officialIndices[0]].address[0].state + '<br>' +
 		data.officials[data.offices[i].officialIndices[0]].address[0].zip);
 	$('.president > .phone > span').html(data.officials[data.offices[i].officialIndices[0]].phones[0]);
-	$('.president > .website > span').html(data.officials[data.offices[i].officialIndices[0]].urls[0])
+	$('.president > .website > span').html(data.officials[data.offices[i].officialIndices[0]].urls[0] ?
+		data.officials[data.offices[i].officialIndices[0]].urls[0] : '')
 }
 
 function vpData(data, i) {
@@ -49,7 +127,8 @@ function vpData(data, i) {
 		data.officials[data.offices[i].officialIndices[0]].address[0].state + '<br>' +
 		data.officials[data.offices[i].officialIndices[0]].address[0].zip);
 	$('.vicePresident > .phone > span').html(data.officials[data.offices[i].officialIndices[0]].phones[0]);
-	$('.vicePresident > .website > span').html(data.officials[data.offices[i].officialIndices[0]].urls[0])
+	$('.vicePresident > .website > span').html(data.officials[data.offices[i].officialIndices[0]].urls[0] ?
+		data.officials[data.offices[i].officialIndices[0]].urls[0] : '')
 }
 
 function senateData(data, i) {
@@ -72,7 +151,8 @@ function senateData(data, i) {
 		data.officials[data.offices[i].officialIndices[1]].address[0].state + '<br>' +
 		data.officials[data.offices[i].officialIndices[1]].address[0].zip);
 	$('.senate2 > .phone > span').html(data.officials[data.offices[i].officialIndices[1]].phones[0]);
-	$('.senate2 > .website > span').html(data.officials[data.offices[i].officialIndices[1]].urls[0])
+	$('.senate2 > .website > span').html(data.officials[data.offices[i].officialIndices[1]].urls[0] ?
+		data.officials[data.offices[i].officialIndices[1]].urls[0] : '')
 }
 
 function governorData(data, i) {
@@ -85,7 +165,8 @@ function governorData(data, i) {
 		data.officials[data.offices[i].officialIndices[0]].address[0].state + '<br>' +
 		data.officials[data.offices[i].officialIndices[0]].address[0].zip);
 	$('.governor > .phone > span').html(data.officials[data.offices[i].officialIndices[0]].phones[0]);
-	$('.governor > .website > span').html(data.officials[data.offices[i].officialIndices[0]].urls[0])
+	$('.governor > .website > span').html(data.officials[data.offices[i].officialIndices[0]].urls[0] ?
+		data.officials[data.offices[i].officialIndices[0]].urls[0] : '')
 }
 
 function mayorData(data, i) {
@@ -98,7 +179,8 @@ function mayorData(data, i) {
 		data.officials[data.offices[i].officialIndices[0]].address[0].state + '<br>' +
 		data.officials[data.offices[i].officialIndices[0]].address[0].zip);
 	$('.mayor > .phone > span').html(data.officials[data.offices[i].officialIndices[0]].phones[0]);
-	$('.mayor > .website > span').html(data.officials[data.offices[i].officialIndices[0]].urls[0])
+	$('.mayor > .website > span').html(data.officials[data.offices[i].officialIndices[0]].urls[0] ?
+		data.officials[data.offices[i].officialIndices[0]].urls[0] : '')
 }
 
 function cityClerkData(data, i) {
@@ -111,7 +193,8 @@ function cityClerkData(data, i) {
 		data.officials[data.offices[i].officialIndices[0]].address[0].state + '<br>' +
 		data.officials[data.offices[i].officialIndices[0]].address[0].zip);
 	$('.cityClerk > .phone > span').html(data.officials[data.offices[i].officialIndices[0]].phones[0]);
-	$('.cityClerk > .website > span').html(data.officials[data.offices[i].officialIndices[0]].urls[0])
+	$('.cityClerk > .website > span').html(data.officials[data.offices[i].officialIndices[0]].urls[0] ?
+		data.officials[data.offices[i].officialIndices[0]].urls[0] : '')
 }
 
 function displayData(data) {
@@ -122,6 +205,7 @@ function displayData(data) {
 			method: "put",
 			contentType: "application/json",
 			data: JSON.stringify({
+				user: state.user,
 				location: data.normalizedInput
 			}),
 			success: function() {
@@ -156,12 +240,21 @@ function displayData(data) {
 	$(window).trigger('hashchange');
 };
 
+function inputLocation(location) {
+	console.log('location is ', location)
+	$('.info > span').html('');
+	var address = location.city + " " + location.line1 + " " + location.state + " " + location.zip;
+
+	getDataFromApi(address, displayData);
+}
+
 function setLocation() {
 	$('.location').submit(function(e) {
 		e.preventDefault();
 		$('.info > span').html('');
 		var address = $(this).find('.address').val();
-
+		$('#location')[0].reset();
+		
 		getDataFromApi(address, displayData);
 	});
 };
@@ -247,6 +340,8 @@ function render(url) {
 
 
 $(function() {
+	createAccount();
+	logIn();
 	logOut();
 	setLocation();
 	$(window).on('hashchange', function(){
