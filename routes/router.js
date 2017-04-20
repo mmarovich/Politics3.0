@@ -110,27 +110,13 @@ module.exports = function(app, passport, path) {
 		console.log(req.body, 'body here');
 		User
 		.findOne(
-			{_id: req.body.user._id}
+			{_id: req.body.user.id}
 		).exec(function (err, data) {
 			console.log(data, 'data here')
-			data.location = req.body.location;
+			data.location = req.body.user.location;
 			data.save();
 			res.status(204).send();
 		})
-		// User
-		// .findOneAndUpdate(
-		// 	{id: req.body.user._id}, 
-		// 	{$set:{location: req.body.location}}, 
-		// 	{new: true}, 
-		// 	function(err, newLocation){
-	    // 		if(err){
-	    // 			res.status(500);
-	    //     		console.log("Something wrong when updating data!");
-	    // 		} else {
-	    // 			console.log("Location updated to " + newLocation);
-	    // 			res.status(204).json('Heyo');
-	    // 		}
-	    // 	});
 	})
 
 	
