@@ -204,9 +204,9 @@ function locationData(data) {
 
 function displayData(data) {
 	console.log(data);
-
+	console.log(state, " state")
 	$.ajax({
-			url: "/location",
+			url: "/location/" + state.user.id,
 			method: "put",
 			contentType: "application/json",
 			data: JSON.stringify({

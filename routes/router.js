@@ -87,12 +87,10 @@ module.exports = function(app, passport, path) {
 	  	function(req, res) {
 	  		console.log(JSON.stringify(req.user));
 	  		if (!req.user) {
-	  			// res.redirect('/login');
 				console.log('User not found!');
 	  		} else {
 	  			console.log(req.session);
 	    		res.json(req.user);
-	    		// res.sendFile(path.resolve(__dirname + '/../public/views/app.html'));
 				console.log('Valid username: ' + req.user);
 	  		}
 		});
@@ -103,17 +101,21 @@ module.exports = function(app, passport, path) {
 		req.session.destroy(function (err) {
 			res.status(302).redirect('/');
 		});
-		// res.sendFile(path.resolve(__dirname + '/../public/views/login.html'));
 	})
 
-	app.put('/location', (req, res) => {
-		console.log(req.body, 'body here');
+	app.put('/location/:id', (req, res) => {
 		User
 		.findOne(
-			{_id: req.body.user.id}
+			{_id: req.params.id}
 		).exec(function (err, data) {
-			console.log(data, 'data here')
-			data.location = req.body.user.location;
+			console.log(arguments)
+			if(err) {
+				return res.status(500).send(err);
+			}
+			if (!data) {
+				return res.status(400).send();
+			}
+			data.location = req.body.location;
 			data.save();
 			res.status(204).send();
 		})

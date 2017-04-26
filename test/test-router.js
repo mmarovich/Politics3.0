@@ -66,19 +66,6 @@ describe('Users source', function() {
 		});
 	});
 
-	describe('GET users endpoint', function() {
-
-		it('should return status 200 on GET', function() {
-
-			return chai.request(app)
-			.get('/users')
-			console.log('got')
-			.then(function(res) {
-				res.should.have.status(200);
-			});
-		});
-	});
-
 	describe('POST endpoint', function() {
 
 		it('should create new user account', function() {
@@ -110,17 +97,15 @@ describe('Users source', function() {
 			const updateData = {
 				location: faker.address.city() + " " + faker.address.state()
 			};
-			console.log(updateData);
 
 			return User
 				.findOne()
 				.exec()
 				.then(user => {
 					updateData.id = user._id;
-					console.log(updateData.id);
 
 					return chai.request(app)
-					.put(`/location/${updateData.location}`)
+					.put(`/location/${user._id}`)
 					.send(updateData);
 				})
 				.then(res => {
@@ -139,29 +124,29 @@ describe('Users source', function() {
 			return chai.request(app)
 			.get('/logout')
 			.then(function(res) {
-				res.should.have.status(302);
+				res.should.have.status(200);
 			});
 		})
 	})
 
-	describe('DELETE endpoint', function() {
-		it('should delete user account', function() {
-			let user;
+	// describe('DELETE endpoint', function() {
+	// 	it('should delete user account', function() {
+	// 		let user;
 
-			return User
-				.findOne()
-				.exec()
-				.then(function(_user) {
-					user = _user;
-					return chai.request(app).delete(`/users/${user._id}`);
-				})
-				.then(function(res) {
-					res.should.have.status(204);
-					return User.findById(user._id).exec();
-				})
-				.then(function(_user) {
-					should.not.exist(_user);
-				});
-		})
-	})
+	// 		return User
+	// 			.findOne()
+	// 			.exec()
+	// 			.then(function(_user) {
+	// 				user = _user;
+	// 				return chai.request(app).delete(`/users/${user._id}`);
+	// 			})
+	// 			.then(function(res) {
+	// 				res.should.have.status(204);
+	// 				return User.findById(user._id).exec();
+	// 			})
+	// 			.then(function(_user) {
+	// 				should.not.exist(_user);
+	// 			});
+	// 	})
+	// })
 });
