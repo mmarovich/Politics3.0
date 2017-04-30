@@ -87,7 +87,7 @@ module.exports = function(app, passport, path) {
 	  	function(req, res) {
 	  		console.log(JSON.stringify(req.user));
 	  		if (!req.user) {
-				console.log('User not found!');
+				return res.status(500).send(err);
 	  		} else {
 	  			console.log(req.session);
 	    		res.json(req.user);
