@@ -26,6 +26,7 @@ function createAccount() {
 			success: function(data) {
 				state.user = data;
 				$('.createAccount').children('input').val('');
+				$('.logIn').children('input').val('');
 				console.log(data);
 				$('.unBio > span').html(data.username);
 				$('.fullNameBio > span').html(data.firstName + ' ' + data.lastName);
@@ -57,7 +58,8 @@ function logIn() {
 			}),
 			success: function(data) {
 				state.user = data;
-				$('.login').children('input').val('');
+				$('.createAccount').children('input').val('');
+				$('.logIn').children('input').val('');
 				$('.unBio > span').html(data.username);
 				$('.fullNameBio > span').html(data.firstName + ' ' + data.lastName);
 				$('logOut').removeClass('hidden');
