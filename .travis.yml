@@ -4,6 +4,8 @@ services:
 - mongodb
 deploy:
   provider: heroku
+  api_key:
+    secure: 25e764f9-f508-4271-8759-90058ed50fea
   app: desolate-ravine-91436
   on:
     repo: mmarovich/politics3.0
