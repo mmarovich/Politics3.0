@@ -138,6 +138,10 @@ button {
     text-align: center;
   }
 
+  .location > span {
+    color: red;
+  }
+
   .president, .vicePresident {
     display: inline-block;
     padding: 20px 100px;

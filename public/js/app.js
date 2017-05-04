@@ -27,7 +27,6 @@ function createAccount() {
 				state.user = data;
 				$('.createAccount').children('input').val('');
 				$('.logIn').children('input').val('');
-				console.log(data);
 				$('.unBio > span').html(data.username);
 				$('.fullNameBio > span').html(data.firstName + ' ' + data.lastName);
 				$('logOut').removeClass('hidden');
@@ -102,7 +101,9 @@ function getDataFromApi(address, callback) {
 		key: 'AIzaSyDV-hWlGqtJe9QnjQSlrFSgTqssSu0rre8',
 		address: address
 	}
-	$.getJSON(CIVIC_CURL, query, callback);
+	$.getJSON(CIVIC_CURL, query, callback).fail(function() {
+		locationError();
+	})
 }
 
 function presidentData(data, i) {
@@ -204,11 +205,13 @@ function locationData(data) {
 		', ' + data.normalizedInput.state + ' ' + data.normalizedInput.zip)
 }
 
+function locationError(){
+	$('.location > span').html('USA location not recognized.  Please try again.');
+}
+
 function displayData(data) {
-	console.log(data);
-	console.log(state, " state")
 	$.ajax({
-			url: "/location/" + state.user.id,
+			url: "/location/" + state.user._id,
 			method: "put",
 			contentType: "application/json",
 			data: JSON.stringify({
@@ -250,16 +253,18 @@ function displayData(data) {
 };
 
 function inputLocation(location) {
-	console.log('location is ', location)
-	$('.info > span').html('information not available');
-	var address = location.city + " " + location.line1 + " " + location.state + " " + location.zip;
-
-	getDataFromApi(address, displayData);
+	if (!location) {
+		$('.info > span').html('information not available');
+	} else {
+		var address = location.city + " " + location.line1 + " " + location.state + " " + location.zip;
+		getDataFromApi(address, displayData);
+	}
 }
 
 function setLocation() {
 	$('.location').submit(function(e) {
 		e.preventDefault();
+		$('.location > span').html("");
 		$('.info > span').html('information not available');
 		var address = $(this).find('.address').val();
 		$('#location')[0].reset();
