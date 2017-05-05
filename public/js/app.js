@@ -9,10 +9,10 @@ state = {
 function createAccount() {
 	$('.createAccount').submit(function(e) {
 		e.preventDefault();
-		var username = $(this).find('.usernameCreate').val();
-		var firstName = $(this).find('.firstName').val();
-		var lastName = $(this).find('.lastName').val();
-		var password = $(this).find('.passwordCreate').val();
+		var username = $(this).find('#username2').val();
+		var firstName = $(this).find('#firstName').val();
+		var lastName = $(this).find('#lastName').val();
+		var password = $(this).find('#password2').val();
 		$.ajax({
 			url: "/signup",
 			method: "post",
@@ -29,7 +29,7 @@ function createAccount() {
 				$('.logIn').children('input').val('');
 				$('.unBio > span').html(data.username);
 				$('.fullNameBio > span').html(data.firstName + ' ' + data.lastName);
-				$('logOut').removeClass('hidden');
+				$('.logOut').removeClass('hidden');
 				state.loggedIn = true;
 				createQueryHash('settings');
 				$(window).trigger('hashchange');
@@ -45,8 +45,8 @@ function createAccount() {
 function logIn() {
 	$('.logIn').submit(function(e) {
 		e.preventDefault();
-		var username = $(this).find('.username').val();
-		var password = $(this).find('.password').val();
+		var username = $(this).find('#username1').val();
+		var password = $(this).find('#password1').val();
 		$.ajax({
 			url: "/login",
 			method: "post",
@@ -61,7 +61,7 @@ function logIn() {
 				$('.logIn').children('input').val('');
 				$('.unBio > span').html(data.username);
 				$('.fullNameBio > span').html(data.firstName + ' ' + data.lastName);
-				$('logOut').removeClass('hidden');
+				$('.logOut').removeClass('hidden');
 				state.loggedIn = true;
 				createQueryHash('dash');
 				$(window).trigger('hashchange');

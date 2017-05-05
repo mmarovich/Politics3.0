@@ -42,9 +42,16 @@ form > button {
 	margin: 5px;
 }
 
-.logIn > p {
-  	font-size: 20px;
-  	margin: 5px;
+.logIn > label {
+  display: block;
+  font-size: 20px;
+  margin: 5px;
+}
+
+.createAccount > label {
+  display: block;
+  font-size: 20px;
+  margin: 5px;
 }
 
 h3 {
