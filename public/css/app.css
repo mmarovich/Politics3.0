@@ -22,6 +22,11 @@ form > button {
   font-size: 14px;
 }
 
+.about {
+  text-align: center;
+  margin: 10px 0 10px 0;
+}
+
 .signUp {
 	border: 5px solid black;
 	text-align: center;
@@ -105,6 +110,10 @@ button {
 	  	display: block;
 	  	text-align: center;
 	}
+
+  .about {
+    font-size: 20px;
+  }
 
 	.signUp {
 	  	display: inline-block;
