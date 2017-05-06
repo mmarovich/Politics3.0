@@ -59,7 +59,6 @@ module.exports = function(app, passport, path) {
 			.then(hash => {
 				return User
 					.create({
-						// id: this._id,
 						username: username,
 						password: hash,
 						firstName: firstName,
@@ -75,7 +74,6 @@ module.exports = function(app, passport, path) {
 		           	res.status(201).json(user.apiRepr());
 		          }
 		        })
-				// return res.status(201).json(user.apiRepr());
 			})
 			.catch(err => {
 				res.status(500).json({message: 'Internal server error'});
@@ -85,19 +83,14 @@ module.exports = function(app, passport, path) {
 	app.post('/login',
 		passport.authenticate('local', {session: true}),
 	  	function(req, res) {
-	  		console.log(JSON.stringify(req.user));
 	  		if (!req.user) {
 				return res.status(500).send(err);
 	  		} else {
-	  			console.log(req.session);
 				res.status(201).json(req.user.apiRepr());
-	    		// res.json(req.user);
-				console.log('Valid username: ' + req.user);
 	  		}
 		});
 
 	app.get('/logout', (req, res) => {
-		console.log('IN LOGOUT');
 		req.logout();
 		req.session.destroy(function (err) {
 			res.status(302).redirect('/');
@@ -109,7 +102,6 @@ module.exports = function(app, passport, path) {
 		.findOne(
 			{_id: req.params.id}
 		).exec(function (err, data) {
-			console.log(arguments)
 			if(err) {
 				return res.status(500).send(err);
 			}

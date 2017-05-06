@@ -69,7 +69,6 @@ function logIn() {
 					lastName: data.lastName,
 					location: data.location
 				}
-				console.log(state.user.username);
 				$('.createAccount').children('input').val('');
 				$('.logIn').children('input').val('');
 				$('.unBio > span').html(data.username);
@@ -242,7 +241,6 @@ function locationError(){
 // displayData is initiated by when user changes their location or logs in.
 
 function displayData(data) {
-	console.log(state);
 	$.ajax({
 			url: "/location/" + state.user.id,
 			method: "put",
@@ -288,7 +286,6 @@ function displayData(data) {
 // grabs user location from database when they log in.
 
 function inputLocation(location) {
-	console.log(state.user);
 	if (!location) {
 		$('.info > span').html('information not available');
 	} else {
@@ -301,7 +298,6 @@ function inputLocation(location) {
 
 function setLocation() {
 	$('.location').submit(function(e) {
-		console.log(state.user);
 		e.preventDefault();
 		$('.location > span').html("");
 		$('.info > span').html('information not available');

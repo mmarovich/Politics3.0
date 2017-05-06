@@ -51,6 +51,5 @@ module.exports = function(passport) {
 		});
 	});
 
-	// passport.use(basicStrategy);
 	passport.use(localStrategy);
 }

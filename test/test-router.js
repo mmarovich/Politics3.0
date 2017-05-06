@@ -59,7 +59,6 @@ describe('Users source', function() {
 
 			return chai.request(app)
 			.get('/')
-			console.log('got')
 			.then(function(res) {
 				res.should.have.status(200);
 			});
@@ -128,25 +127,4 @@ describe('Users source', function() {
 			});
 		})
 	})
-
-	// describe('DELETE endpoint', function() {
-	// 	it('should delete user account', function() {
-	// 		let user;
-
-	// 		return User
-	// 			.findOne()
-	// 			.exec()
-	// 			.then(function(_user) {
-	// 				user = _user;
-	// 				return chai.request(app).delete(`/users/${user._id}`);
-	// 			})
-	// 			.then(function(res) {
-	// 				res.should.have.status(204);
-	// 				return User.findById(user._id).exec();
-	// 			})
-	// 			.then(function(_user) {
-	// 				should.not.exist(_user);
-	// 			});
-	// 	})
-	// })
 });
