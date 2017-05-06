@@ -24,7 +24,13 @@ function createAccount() {
 				password: password
 			}),
 			success: function(data) {
-				state.user = data;
+				state.user = {
+					id: data.id,
+					username: data.username,
+					firstName: data.firstName,
+					lastName: data.lastName,
+					location: data.location
+				}
 				$('.createAccount').children('input').val('');
 				$('.logIn').children('input').val('');
 				$('.unBio > span').html(data.username);
@@ -56,7 +62,14 @@ function logIn() {
 				password: password
 			}),
 			success: function(data) {
-				state.user = data;
+				state.user = {
+					id: data.id,
+					username: data.username,
+					firstName: data.firstName,
+					lastName: data.lastName,
+					location: data.location
+				}
+				console.log(state.user.username);
 				$('.createAccount').children('input').val('');
 				$('.logIn').children('input').val('');
 				$('.unBio > span').html(data.username);
@@ -218,8 +231,9 @@ function locationError(){
 }
 
 function displayData(data) {
+	console.log(state);
 	$.ajax({
-			url: "/location/" + state.user._id,
+			url: "/location/" + state.user.id,
 			method: "put",
 			contentType: "application/json",
 			data: JSON.stringify({
@@ -261,6 +275,7 @@ function displayData(data) {
 };
 
 function inputLocation(location) {
+	console.log(state.user);
 	if (!location) {
 		$('.info > span').html('information not available');
 	} else {
@@ -271,6 +286,7 @@ function inputLocation(location) {
 
 function setLocation() {
 	$('.location').submit(function(e) {
+		console.log(state.user);
 		e.preventDefault();
 		$('.location > span').html("");
 		$('.info > span').html('information not available');

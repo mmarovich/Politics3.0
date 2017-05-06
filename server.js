@@ -8,7 +8,7 @@ mongoose.Promise = global.Promise;
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
-const {PORT, DATABASE_URL} = require('./config/database.js');
+const {PORT, DATABASE_URL, TEST_DATABASE_URL} = require('./config/database.js');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -35,9 +35,9 @@ require('./routes/router.js')(app, passport, path);
 
 let server;
 
-function runServer(port=PORT) {
+function runServer(database=DATABASE_URL, port=PORT) {
 return new Promise((resolve, reject) => {
-    mongoose.connect(DATABASE_URL, err => {
+    mongoose.connect(database, err => {
       if (err) {
         return reject(err);
       }

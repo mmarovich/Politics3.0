@@ -59,7 +59,7 @@ module.exports = function(app, passport, path) {
 			.then(hash => {
 				return User
 					.create({
-						id: this._id,
+						// id: this._id,
 						username: username,
 						password: hash,
 						firstName: firstName,
@@ -90,7 +90,8 @@ module.exports = function(app, passport, path) {
 				return res.status(500).send(err);
 	  		} else {
 	  			console.log(req.session);
-	    		res.json(req.user);
+				res.status(201).json(req.user.apiRepr());
+	    		// res.json(req.user);
 				console.log('Valid username: ' + req.user);
 	  		}
 		});
