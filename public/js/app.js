@@ -75,10 +75,15 @@ function logIn() {
 				$('.fullNameBio > span').html(data.firstName + ' ' + data.lastName);
 				$('.logOut').removeClass('hidden');
 				state.loggedIn = true;
-				createQueryHash('dash');
-				$(window).trigger('hashchange');
-				inputLocation(data.location);
 				console.log('Login Successful')
+				if (!data.location) {
+					createQueryHash('settings');
+					$(window).trigger('hashchange');
+				} else {
+					createQueryHash('dash');
+					$(window).trigger('hashchange');
+					inputLocation(data.location);
+				}
 			},
 			error: function() {
 				console.log('get error');
