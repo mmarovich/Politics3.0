@@ -135,8 +135,8 @@ function presidentData(data, i) {
 	$('.president > .address > span').html(data.officials[data.offices[i].officialIndices[0]].address[0].line1 + '<br>' +
 		(data.officials[data.offices[i].officialIndices[0]].address[0].line2 ? 
 			data.officials[data.offices[i].officialIndices[0]].address[0].line2 + '<br>': '') +
-		data.officials[data.offices[i].officialIndices[0]].address[0].city + '<br>' +
-		data.officials[data.offices[i].officialIndices[0]].address[0].state + '<br>' +
+		data.officials[data.offices[i].officialIndices[0]].address[0].city + ', ' +
+		data.officials[data.offices[i].officialIndices[0]].address[0].state + ' ' +
 		data.officials[data.offices[i].officialIndices[0]].address[0].zip);
 	$('.president > .phone > span').html(data.officials[data.offices[i].officialIndices[0]].phones[0]);
 	$('.president > .website > a').html(data.officials[data.offices[i].officialIndices[0]].urls[0] ?
@@ -150,8 +150,8 @@ function vpData(data, i) {
 	$('.vicePresident > .address > span').html(data.officials[data.offices[i].officialIndices[0]].address[0].line1 + '<br>' +
 		(data.officials[data.offices[i].officialIndices[0]].address[0].line2 ? 
 			data.officials[data.offices[i].officialIndices[0]].address[0].line2 + '<br>': '') +
-		data.officials[data.offices[i].officialIndices[0]].address[0].city + '<br>' +
-		data.officials[data.offices[i].officialIndices[0]].address[0].state + '<br>' +
+		data.officials[data.offices[i].officialIndices[0]].address[0].city + ', ' +
+		data.officials[data.offices[i].officialIndices[0]].address[0].state + ' ' +
 		data.officials[data.offices[i].officialIndices[0]].address[0].zip);
 	$('.vicePresident > .phone > span').html(data.officials[data.offices[i].officialIndices[0]].phones[0]);
 	$('.vicePresident > .website > a').html(data.officials[data.offices[i].officialIndices[0]].urls[0] ?
@@ -165,8 +165,8 @@ function senateData(data, i) {
 	$('.senate1 > .address > span').html(data.officials[data.offices[i].officialIndices[0]].address[0].line1 + '<br>' +
 		(data.officials[data.offices[i].officialIndices[0]].address[0].line2 ? 
 			data.officials[data.offices[i].officialIndices[0]].address[0].line2 + '<br>': '') +
-		data.officials[data.offices[i].officialIndices[0]].address[0].city + '<br>' +
-		data.officials[data.offices[i].officialIndices[0]].address[0].state + '<br>' +
+		data.officials[data.offices[i].officialIndices[0]].address[0].city + ', ' +
+		data.officials[data.offices[i].officialIndices[0]].address[0].state + ' ' +
 		data.officials[data.offices[i].officialIndices[0]].address[0].zip);
 	$('.senate1 > .phone > span').html(data.officials[data.offices[i].officialIndices[0]].phones[0]);
 	$('.senate1 > .website > a').html(data.officials[data.offices[i].officialIndices[0]].urls[0] ?
@@ -177,8 +177,8 @@ function senateData(data, i) {
 	$('.senate2 > .address > span').html(data.officials[data.offices[i].officialIndices[1]].address[0].line1 + '<br>' +
 		(data.officials[data.offices[i].officialIndices[1]].address[0].line2 ? 
 			data.officials[data.offices[i].officialIndices[1]].address[0].line2 + '<br>': '') +
-		data.officials[data.offices[i].officialIndices[1]].address[0].city + '<br>' +
-		data.officials[data.offices[i].officialIndices[1]].address[0].state + '<br>' +
+		data.officials[data.offices[i].officialIndices[1]].address[0].city + ', ' +
+		data.officials[data.offices[i].officialIndices[1]].address[0].state + ' ' +
 		data.officials[data.offices[i].officialIndices[1]].address[0].zip);
 	$('.senate2 > .phone > span').html(data.officials[data.offices[i].officialIndices[1]].phones[0]);
 	$('.senate2 > .website > a').html(data.officials[data.offices[i].officialIndices[1]].urls[0] ?
@@ -192,8 +192,8 @@ function governorData(data, i) {
 	$('.governor > .address > span').html(data.officials[data.offices[i].officialIndices[0]].address[0].line1 + '<br>' +
 		(data.officials[data.offices[i].officialIndices[0]].address[0].line2 ? 
 			data.officials[data.offices[i].officialIndices[0]].address[0].line2 + '<br>': '') +
-		data.officials[data.offices[i].officialIndices[0]].address[0].city + '<br>' +
-		data.officials[data.offices[i].officialIndices[0]].address[0].state + '<br>' +
+		data.officials[data.offices[i].officialIndices[0]].address[0].city + ', ' +
+		data.officials[data.offices[i].officialIndices[0]].address[0].state + ' ' +
 		data.officials[data.offices[i].officialIndices[0]].address[0].zip);
 	$('.governor > .phone > span').html(data.officials[data.offices[i].officialIndices[0]].phones[0]);
 	$('.governor > .website > a').html(data.officials[data.offices[i].officialIndices[0]].urls[0] ?
@@ -207,8 +207,8 @@ function mayorData(data, i) {
 	$('.mayor > .address > span').html(data.officials[data.offices[i].officialIndices[0]].address[0].line1 + '<br>' +
 		(data.officials[data.offices[i].officialIndices[0]].address[0].line2 ? 
 			data.officials[data.offices[i].officialIndices[0]].address[0].line2 + '<br>': '') +
-		data.officials[data.offices[i].officialIndices[0]].address[0].city + '<br>' +
-		data.officials[data.offices[i].officialIndices[0]].address[0].state + '<br>' +
+		data.officials[data.offices[i].officialIndices[0]].address[0].city + ', ' +
+		data.officials[data.offices[i].officialIndices[0]].address[0].state + ' ' +
 		data.officials[data.offices[i].officialIndices[0]].address[0].zip);
 	$('.mayor > .phone > span').html(data.officials[data.offices[i].officialIndices[0]].phones[0]);
 	$('.mayor > .website > a').html(data.officials[data.offices[i].officialIndices[0]].urls[0] ?
@@ -222,8 +222,8 @@ function cityClerkData(data, i) {
 	$('.cityClerk > .address > span').html(data.officials[data.offices[i].officialIndices[0]].address[0].line1 + '<br>' +
 		(data.officials[data.offices[i].officialIndices[0]].address[0].line2 ? 
 			data.officials[data.offices[i].officialIndices[0]].address[0].line2 + '<br>': '') +
-		data.officials[data.offices[i].officialIndices[0]].address[0].city + '<br>' +
-		data.officials[data.offices[i].officialIndices[0]].address[0].state + '<br>' +
+		data.officials[data.offices[i].officialIndices[0]].address[0].city + ', ' +
+		data.officials[data.offices[i].officialIndices[0]].address[0].state + ' ' +
 		data.officials[data.offices[i].officialIndices[0]].address[0].zip);
 	$('.cityClerk > .phone > span').html(data.officials[data.offices[i].officialIndices[0]].phones[0]);
 	$('.cityClerk > .website > a').html(data.officials[data.offices[i].officialIndices[0]].urls[0] ?
