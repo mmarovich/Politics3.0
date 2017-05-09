@@ -125,7 +125,7 @@ h1 {
   width: 65%;
   display: inline-block;
   color: #8A3324;
-  text-shadow: -2px 2px 2px black;
+  text-shadow: -2px 2px 6px black;
 }
 
 header > form {
