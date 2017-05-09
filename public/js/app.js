@@ -293,6 +293,7 @@ function displayData(data) {
 function inputLocation(location) {
 	if (!location) {
 		$('.info > span').html('information not available');
+		$('.info > a').html('');
 	} else {
 		var address = location.city + " " + location.line1 + " " + location.state + " " + location.zip;
 		getDataFromApi(address, displayData);
@@ -306,6 +307,7 @@ function setLocation() {
 		e.preventDefault();
 		$('.location > span').html("");
 		$('.info > span').html('information not available');
+		$('.info > a').html('');
 		var address = $(this).find('.address').val();
 		$('#location')[0].reset();
 		
