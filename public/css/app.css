@@ -300,6 +300,14 @@ button {
     color: red;
   }
 
+  .signUp > span {
+    color: red;
+  }
+
+  .logInBox > span {
+    color: red;
+  }
+
   .president, .vicePresident {
     display: inline-block;
     padding: 20px 100px;
